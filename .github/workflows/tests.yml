@@ -25,4 +25,8 @@ jobs:
           playwright install --with-deps
 
       - name: Run tests
+        env:
+          BASE_URL: ${{ secrets.BASE_URL }}
+          SWAGLABS_USERNAME: ${{ secrets.SWAGLABS_USERNAME }}
+          SWAGLABS_PASSWORD: ${{ secrets.SWAGLABS_PASSWORD }}
         run: pytest

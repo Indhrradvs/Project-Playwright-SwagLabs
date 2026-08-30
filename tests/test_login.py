@@ -17,7 +17,7 @@ def test_loginPage(page: Page):
 
     # Verifying the URL
     expect(page).to_have_url(
-        f"{settings.base_url}inventory.html"
+        f"{settings.base_url}/inventory.html"
     )  # '/' already added to url
 
     # Verifying title of the section

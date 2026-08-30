@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class Settings:
-  base_url = os.environ.get("BASE_URL")
+  base_url = os.environ.get("BASE_URL").rstrip("/")  # Remove trailing slash if present
   username = os.environ.get("SWAGLABS_USERNAME")
   password = os.environ.get("SWAGLABS_PASSWORD")
   

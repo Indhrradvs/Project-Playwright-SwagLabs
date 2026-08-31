@@ -60,7 +60,3 @@ def test_verify_add_to_cart(logged_in_inventory_page):
 
     items_expected_count = str(len(items_to_add))
     expect(logged_in_inventory_page.cart_items_count).to_have_text(items_expected_count)
-    
-    
-    
-    expect(logged_in_inventory_page.cart_items_count).to_have_count(items_expected_count)

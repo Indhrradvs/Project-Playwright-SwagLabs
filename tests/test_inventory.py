@@ -40,15 +40,27 @@ def test_verify_items_price(logged_in_inventory_page):
 
 def test_verify_cart_icon(logged_in_inventory_page):
     expect(logged_in_inventory_page.cart_icon).to_be_visible()
-    
+
+
 def test_verify_sort_dropdown(logged_in_inventory_page):
     expect(logged_in_inventory_page.sort_dropdown).to_be_visible()
     expect(logged_in_inventory_page.sort_dropdown).to_be_enabled()
-    
+
+
 def test_verify_add_to_cart(logged_in_inventory_page):
-  logged_in_inventory_page.add_to_cart_by_name("Sauce Labs Backpack")
-  logged_in_inventory_page.add_to_cart_by_name("Test.allTheThings() T-Shirt (Red)")
-  expect(logged_in_inventory_page.cart_items_count).to_have_text("2")
-  
-  
-  
+    items_to_add = [
+        "Sauce Labs Backpack",
+        "Sauce Labs Bike Light",
+        "Test.allTheThings() T-Shirt (Red)"
+        
+    ] #if u want to select more, add value here
+
+    for items in items_to_add:
+        logged_in_inventory_page.add_to_cart_by_name(items)
+
+    items_expected_count = str(len(items_to_add))
+    expect(logged_in_inventory_page.cart_items_count).to_have_text(items_expected_count)
+    
+    
+    
+    expect(logged_in_inventory_page.cart_items_count).to_have_count(items_expected_count)

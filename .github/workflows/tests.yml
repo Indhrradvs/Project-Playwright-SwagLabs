@@ -4,7 +4,7 @@ on:
   push:
   pull_request:
   schedule:
-  - cron: '0 12 * * *'   # 12 PM UTC = 7 AM EST
+  - cron: '0 9 * * *'   # 09 AM UTC = 5 AM EDT
   workflow_dispatch:
 
 jobs:

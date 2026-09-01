@@ -14,7 +14,7 @@ class CartPage(BasePage):
         self.cart_item_quantity_label = my_page.locator("[data-test='item-quantity']")
 
         # Buttons
-        self.cart_remove_item = my_page.locator("button", has_text='Remove')
+        self.cart_remove_btn = my_page.locator("button", has_text='Remove')
         #self.cart_remove_item = my_page.locator("button:has_text('Remove')") #Remove if this fails
         self.cart_continue_shopping = my_page.locator("[data-test='continue-shopping']")
         self.cart_checkout = my_page.locator("[data-test='checkout']")

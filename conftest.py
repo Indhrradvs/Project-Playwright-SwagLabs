@@ -4,6 +4,8 @@ from config.env import settings
 from pages.login_page import LoginPage
 from pages.inventory_page import InventoryPage
 from pages.cart_page import CartPage
+from pages.checkout_step_one_page import CheckoutStepOnePage
+from pages.checkout_step_two_page import CheckoutStepTwoPage
 
 
 @pytest.fixture
@@ -35,3 +37,13 @@ def cart_page_with_items(logged_in_inventory_page):
 
     cart_page = CartPage(inventory_page.page)
     return cart_page
+
+
+@pytest.fixture
+def checkout_step_one_page(cart_page_with_items):
+    cart_page_with_items.cart_checkout.click()
+    return CheckoutStepOnePage(cart_page_with_items.page)
+
+@pytest.fixture
+def checkout_step_two_page(checkout_step_one_page):
+    return checkout_step_one_page.fill_info_and_continue('Frank', 'Martin', '1234')

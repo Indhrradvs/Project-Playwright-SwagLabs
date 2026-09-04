@@ -24,6 +24,17 @@ jobs:
           pip install -r requirements.txt
           playwright install --with-deps
 
+      - name: Install Allure CLI
+        run: |
+          set -e
+          ALLURE_VERSION=2.25.0
+          echo "Installing Allure CLI ${ALLURE_VERSION}"
+          wget -qO /tmp/allure.zip "https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/${ALLURE_VERSION}/allure-commandline-${ALLURE_VERSION}.zip"
+          sudo unzip -q /tmp/allure.zip -d /opt/
+          sudo ln -sf "/opt/allure-${ALLURE_VERSION}/bin/allure" /usr/local/bin/allure
+          chmod +x /usr/local/bin/allure
+          allure --version
+
       - name: Run tests
         env:
           BASE_URL: ${{ secrets.BASE_URL }}

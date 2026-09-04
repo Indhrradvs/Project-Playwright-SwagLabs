@@ -1,5 +1,4 @@
 from playwright.sync_api import expect
-from pages.checkout_step_one_page import CheckoutStepOnePage
 from pages.checkout_step_two_page import CheckoutStepTwoPage
 
 

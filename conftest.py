@@ -7,7 +7,6 @@ from pages.cart_page import CartPage
 from pages.checkout_step_one_page import CheckoutStepOnePage
 from pages.checkout_step_two_page import CheckoutStepTwoPage
 
-
 @pytest.fixture
 def logged_in_inventory_page(page: Page):
     login_page = LoginPage(
@@ -47,3 +46,10 @@ def checkout_step_one_page(cart_page_with_items):
 @pytest.fixture
 def checkout_step_two_page(checkout_step_one_page):
     return checkout_step_one_page.fill_info_and_continue('Frank', 'Martin', '1234')
+
+@pytest.fixture
+def checkout_step_two_page_finish(checkout_step_two_page:CheckoutStepTwoPage):
+   checkout_step_two_page.finish_btn.click()
+   from pages.checkout_step_complete_page import CheckoutCompletePage
+   return CheckoutCompletePage(checkout_step_two_page.page)
+    

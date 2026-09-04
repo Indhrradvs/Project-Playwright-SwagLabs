@@ -1,0 +1,8 @@
+allure_cli_path = "allure"
+allure_report_dir = "allure-report"
+report_title = "Project-Playwright-SwagLabs"
+open_report_by_default = false
+
+[environment]
+Project = "Project-Playwright-SwagLabs"
+Browser = "Chromium"

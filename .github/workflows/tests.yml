@@ -29,4 +29,4 @@ jobs:
           BASE_URL: ${{ secrets.BASE_URL }}
           SWAGLABS_USERNAME: ${{ secrets.SWAGLABS_USERNAME }}
           SWAGLABS_PASSWORD: ${{ secrets.SWAGLABS_PASSWORD }}
-        run: pytest
+        run: pytest --alluredir=allure-results --allure-pytest-auto-config=allure_pytest_auto.toml

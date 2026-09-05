@@ -1,32 +1,41 @@
 name: Run Playwright Tests
 
-on: 
+# Triggers: run on every push, every PR, once daily (schedule), and manually via the Actions tab
+on:
   push:
   pull_request:
   schedule:
-  - cron: '0 9 * * *'   # 09 AM UTC = 5 AM EDT
-  workflow_dispatch:
+    - cron: '0 9 * * *'   # 09 AM UTC = 5 AM EDT (buffered earlier to absorb GitHub's scheduling delays)
+  workflow_dispatch:       # allows manually clicking "Run workflow" in the Actions tab
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # GitHub spins up a temporary Linux machine for this job
+
     steps:
+      # Copies this repo's code onto the temporary machine
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Installs Python 3.11 on the temporary machine
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
+      # Installs our Python packages (playwright, pytest, allure-pytest, etc.)
+      # and Playwright's browser binaries (--with-deps also installs required OS libraries)
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
           playwright install --with-deps
 
+      # Downloads and installs the Allure command-line tool (not a Python package,
+      # so it can't come from requirements.txt - Ubuntu runners have no Homebrew,
+      # hence downloading the .zip directly)
       - name: Install Allure CLI
         run: |
-          set -e
+          set -e  # stop immediately if any command below fails
           ALLURE_VERSION=2.25.0
           echo "Installing Allure CLI ${ALLURE_VERSION}"
           wget -qO /tmp/allure.zip "https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/${ALLURE_VERSION}/allure-commandline-${ALLURE_VERSION}.zip"
@@ -35,6 +44,8 @@ jobs:
           sudo chmod +x /usr/local/bin/allure
           allure --version
 
+      # Runs the full test suite. Credentials come from GitHub Secrets, never hardcoded.
+      # if: always() ensures later steps (report generation) still run even if tests fail
       - name: Run tests
         if: always()
         env:
@@ -42,11 +53,14 @@ jobs:
           SWAGLABS_USERNAME: ${{ secrets.SWAGLABS_USERNAME }}
           SWAGLABS_PASSWORD: ${{ secrets.SWAGLABS_PASSWORD }}
         run: pytest --alluredir=allure-results --allure-pytest-auto-config=allure_pytest_auto.toml
-     
+
+      # Converts the raw Allure result data into a browsable HTML report
       - name: Generate Allure Report
         if: always()
         run: allure generate allure-results --clean -o allure-report
 
+      # Uploads the report as a downloadable CI artifact (Actions tab -> this run -> Artifacts)
+      # retention-days keeps GitHub from storing these forever
       - name: Upload Allure Report
         if: always()
         uses: actions/upload-artifact@v4

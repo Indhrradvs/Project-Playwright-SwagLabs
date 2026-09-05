@@ -90,6 +90,16 @@ Tests run automatically via GitHub Actions on:
 
 Credentials are provided via GitHub Secrets (`BASE_URL`, `SWAGLABS_USERNAME`, `SWAGLABS_PASSWORD`).
 
+### Workflow steps, explained
+
+1. **Checkout code** — pulls this repo onto GitHub's temporary runner
+2. **Set up Python** — installs Python 3.11
+3. **Install dependencies** — installs pip packages + Playwright browser binaries
+4. **Install Allure CLI** — downloads the Allure command-line tool (not a pip package; Ubuntu runners have no Homebrew, so it's fetched directly from Maven)
+5. **Run tests** — runs the full suite (Chromium, Firefox, WebKit) with credentials from GitHub Secrets
+6. **Generate Allure Report** — builds the browsable HTML report from raw results
+7. **Upload Allure Report** — attaches the report to this run as a downloadable artifact (auto-expires after 7 days)
+
 ## Branching Workflow
 
 - `main` — always in a working, tested state

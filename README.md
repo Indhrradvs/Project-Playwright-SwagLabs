@@ -105,11 +105,47 @@ Credentials are provided via GitHub Secrets (`BASE_URL`, `SWAGLABS_USERNAME`, `S
 - `main` — always in a working, tested state
 - `feature/<name>` — one branch per page/feature, merged via PR after CI passes
 
-## Planned Enhancements
+## Running with Docker
 
-- Cross-browser testing (Chromium, Firefox, WebKit)
-- Dynamic price calculation (replace hardcoded checkout totals)
-- CSS/visual styling checks
+The framework can run inside a Docker container — same environment (Python, packages, browsers) on any machine (Mac, Windows, Linux), no manual setup needed beyond Docker itself.
+
+### Prerequisites
+
+- Docker Desktop installed and running ([docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop/))
+- A `.env` file in the project root (same as local setup — not committed to git, must be created fresh on each machine)
+
+### Build the image
+
+```bash
+docker build -t swaglabs-tests .
+```
+
+### Run the tests
+
+```bash
+docker run --env-file .env swaglabs-tests
+```
+
+### Run and save the Allure report to your local machine
+
+By default, anything generated inside a container (like the Allure report) is lost once the container stops. To persist the report on your actual machine, mount a local folder into the container:
+
+```bash
+docker run --env-file .env -v $(pwd)/allure-report:/app/allure-report swaglabs-tests
+```
+
+The report will then be available locally at `allure-report/<timestamp>/`, viewable via:
+
+```bash
+allure open allure-report/<timestamp-folder>
+```
+
+### Notes
+
+- The image is based on `mcr.microsoft.com/playwright/python`, version-matched to the `playwright` version in `requirements.txt` (versions must match, or Playwright cannot locate browser executables)
+- Java (`default-jre`) and `wget`/`unzip` are installed in the image, required for the Allure CLI
+- `.dockerignore` excludes `venv/`, `.git/`, `.env`, and other local-only files from the image
+
+## Planned Enhancements
 - Fixture scoping for faster test runs (session-level login reuse)
-- Docker support (cross-platform runs, including Windows)
 - BDD/Cucumber-style tests (exploratory, separate learning project)

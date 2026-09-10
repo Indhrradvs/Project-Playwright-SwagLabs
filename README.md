@@ -13,6 +13,7 @@ A Playwright + Python test automation framework built using the Page Object Mode
 
 ## Project Structure
 
+```
 Project-Playwright-SwagLabs/
 ├── pages/ # Page objects (locators + actions, one class per screen)
 ├── tests/ # Test files
@@ -23,8 +24,7 @@ Project-Playwright-SwagLabs/
 ├── requirements.txt # Python dependencies
 ├── allure_pytest_auto.toml # Allure report configuration
 └── .github/workflows/ # CI pipeline (GitHub Actions)
-
-
+```
 ## Setup
 
 ```bash
@@ -146,6 +146,24 @@ allure open allure-report/<timestamp-folder>
 - Java (`default-jre`) and `wget`/`unzip` are installed in the image, required for the Allure CLI
 - `.dockerignore` excludes `venv/`, `.git/`, `.env`, and other local-only files from the image
 
+### Parallel Execution
+
+Tests run in parallel by default (`pytest-xdist`), splitting the suite across multiple workers to reduce total run time.
+
+```bash
+pytest              # runs with the configured default (-n 8, set in pytest.ini)
+pytest -n 4          # override: run with a specific number of workers
+pytest -n auto       # override: auto-detect available CPU cores
+```
+
+**Local benchmark** (102 tests, 3 browsers):
+
+| Mode | Time |
+|---|---|
+| Sequential (no `-n`) | ~124s |
+| Parallel (`-n 8`) | ~56-93s |
+
+**Note:** CI uses `-n auto` instead of a hardcoded number, since GitHub's runners may have a different core count than your local machine. Command-line flags override `pytest.ini` defaults.
+
 ## Planned Enhancements
-- Fixture scoping for faster test runs (session-level login reuse)
 - BDD/Cucumber-style tests (exploratory, separate learning project)

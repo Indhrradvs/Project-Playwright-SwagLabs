@@ -1,7 +1,5 @@
 # Project-Playwright-SwagLabs
 
-A Playwright + Python test automation framework built using the Page Object Model (POM), targeting the SwagLabs demo site ([saucedemo.com](https://www.saucedemo.com)).
-
 ![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Playwright](https://img.shields.io/badge/Playwright-Automation-2EAD33?style=for-the-badge&logo=playwright&logoColor=white)
 ![Pytest](https://img.shields.io/badge/Pytest-Testing-0A9EDC?style=for-the-badge&logo=pytest&logoColor=white)
@@ -10,6 +8,8 @@ A Playwright + Python test automation framework built using the Page Object Mode
 ![Allure](https://img.shields.io/badge/Allure-Reports-FF6E00?style=for-the-badge&logo=qameta&logoColor=white)
 
 ![Tests](https://github.com/indhrradvs/Project-Playwright-SwagLabs/actions/workflows/tests.yml/badge.svg)
+
+A Playwright + Python test automation framework built using the Page Object Model (POM), targeting the SwagLabs demo site ([saucedemo.com](https://www.saucedemo.com)).
 
 ## Table of Contents
 

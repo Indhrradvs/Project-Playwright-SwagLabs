@@ -2,6 +2,42 @@
 
 A Playwright + Python test automation framework built using the Page Object Model (POM), targeting the SwagLabs demo site ([saucedemo.com](https://www.saucedemo.com)).
 
+![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Playwright](https://img.shields.io/badge/Playwright-Automation-2EAD33?style=for-the-badge&logo=playwright&logoColor=white)
+![Pytest](https://img.shields.io/badge/Pytest-Testing-0A9EDC?style=for-the-badge&logo=pytest&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Container-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-CI/CD-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)
+![Allure](https://img.shields.io/badge/Allure-Reports-FF6E00?style=for-the-badge&logo=qameta&logoColor=white)
+
+![Tests](https://github.com/indhrradvs/Project-Playwright-SwagLabs/actions/workflows/tests.yml/badge.svg)
+
+## Table of Contents
+
+- [Highlights](#highlights)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Setup](#setup)
+- [Environment Variables](#environment-variables)
+- [Running Tests](#running-tests)
+  - [Parallel Execution](#parallel-execution)
+  - [Handling Flaky Tests](#handling-flaky-tests)
+- [Code Quality](#code-quality)
+- [Allure Reports](#allure-reports)
+- [Running with Docker](#running-with-docker)
+- [CI/CD](#cicd)
+- [Branching Workflow](#branching-workflow)
+- [Glossary](#glossary)
+
+## Highlights
+
+- 🧩 **Page Object Model** — one class per screen, clean separation of locators and actions
+- 🌐 **Cross-browser** — Chromium, Firefox, WebKit
+- ⚡ **Parallel execution** — full suite in ~1 minute via `pytest-xdist`
+- 📊 **Allure reporting** — rich, browsable test reports, locally and in CI
+- 🐳 **Dockerized** — runs identically on any machine with Docker installed
+- 🔁 **CI/CD** — GitHub Actions, running on every push, PR, schedule, and on demand
+- ✅ **Code quality enforced** — `black` + `flake8` via pre-commit hooks
+
 ## Tech Stack
 
 - **Language:** Python 3

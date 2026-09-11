@@ -6,7 +6,6 @@
 ![Docker](https://img.shields.io/badge/Docker-Container-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-CI/CD-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)
 ![Allure](https://img.shields.io/badge/Allure-Reports-FF6E00?style=for-the-badge&logo=qameta&logoColor=white)
-
 ![Tests](https://github.com/indhrradvs/Project-Playwright-SwagLabs/actions/workflows/tests.yml/badge.svg)
 
 A Playwright + Python test automation framework built using the Page Object Model (POM), targeting the SwagLabs demo site ([saucedemo.com](https://www.saucedemo.com)).

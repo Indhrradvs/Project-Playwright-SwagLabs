@@ -1,7 +1,5 @@
-from playwright.sync_api import Page, expect
-from pages.login_page import LoginPage
+from playwright.sync_api import expect
 from pages.inventory_page import InventoryPage
-from pages.cart_page import CartPage
 from config.env import settings
 
 

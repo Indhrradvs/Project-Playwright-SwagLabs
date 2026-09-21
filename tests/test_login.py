@@ -3,6 +3,7 @@ from config.env import settings
 from pages.login_page import LoginPage
 import pytest
 
+
 @pytest.mark.smoke
 def test_loginPage(page: Page):
     """

@@ -103,84 +103,6 @@ pytest --headed
 pytest --headed --slowmo 500
 ```
 
-## Allure Reports
-
-```bash
-# Run tests and generate Allure results
-pytest --alluredir=allure-results --allure-pytest-auto-config=allure_pytest_auto.toml
-
-# Open the generated report
-allure open allure-report
-```
-
-**Requirements:** Allure CLI must be installed separately (Mac: `brew install allure`).
-
-## CI/CD
-
-Tests run automatically via GitHub Actions on:
-- Every push
-- Every pull request
-- A daily schedule
-- Manual trigger (`workflow_dispatch`, via the Actions tab)
-
-Credentials are provided via GitHub Secrets (`BASE_URL`, `SWAGLABS_USERNAME`, `SWAGLABS_PASSWORD`).
-
-### Workflow steps, explained
-
-1. **Checkout code** — pulls this repo onto GitHub's temporary runner
-2. **Set up Python** — installs Python 3.11
-3. **Install dependencies** — installs pip packages + Playwright browser binaries
-4. **Install Allure CLI** — downloads the Allure command-line tool (not a pip package; Ubuntu runners have no Homebrew, so it's fetched directly from Maven)
-5. **Run tests** — runs the full suite (Chromium, Firefox, WebKit) with credentials from GitHub Secrets
-6. **Generate Allure Report** — builds the browsable HTML report from raw results
-7. **Upload Allure Report** — attaches the report to this run as a downloadable artifact (auto-expires after 7 days)
-
-## Branching Workflow
-
-- `main` — always in a working, tested state
-- `feature/<name>` — one branch per page/feature, merged via PR after CI passes
-
-## Running with Docker
-
-The framework can run inside a Docker container — same environment (Python, packages, browsers) on any machine (Mac, Windows, Linux), no manual setup needed beyond Docker itself.
-
-### Prerequisites
-
-- Docker Desktop installed and running ([docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop/))
-- A `.env` file in the project root (same as local setup — not committed to git, must be created fresh on each machine)
-
-### Build the image
-
-```bash
-docker build -t swaglabs-tests .
-```
-
-### Run the tests
-
-```bash
-docker run --env-file .env swaglabs-tests
-```
-
-### Run and save the Allure report to your local machine
-
-By default, anything generated inside a container (like the Allure report) is lost once the container stops. To persist the report on your actual machine, mount a local folder into the container:
-
-```bash
-docker run --env-file .env -v $(pwd)/allure-report:/app/allure-report swaglabs-tests
-```
-
-The report will then be available locally at `allure-report/<timestamp>/`, viewable via:
-
-```bash
-allure open allure-report/<timestamp-folder>
-```
-
-### Notes
-
-- The image is based on `mcr.microsoft.com/playwright/python`, version-matched to the `playwright` version in `requirements.txt` (versions must match, or Playwright cannot locate browser executables)
-- Java (`default-jre`) and `wget`/`unzip` are installed in the image, required for the Allure CLI
-- `.dockerignore` excludes `venv/`, `.git/`, `.env`, and other local-only files from the image
-
 ### Parallel Execution
 
 Tests run in parallel by default (`pytest-xdist`), splitting the suite across multiple workers to reduce total run time.
@@ -223,6 +145,18 @@ pre-commit run --all-files
 ```
 
 Once installed, `black` and `flake8` run automatically before every `git commit` — formatting issues are auto-fixed, lint issues block the commit until resolved.
+
+## Allure Reports
+
+```bash
+# Run tests and generate Allure results
+pytest --alluredir=allure-results --allure-pytest-auto-config=allure_pytest_auto.toml
+
+# Open the generated report
+allure open allure-report
+```
+
+**Requirements:** Allure CLI must be installed separately (Mac: `brew install allure`).
 
 ## Running with Docker
 
@@ -284,6 +218,11 @@ Credentials are provided via GitHub Secrets (`BASE_URL`, `SWAGLABS_USERNAME`, `S
 5. **Run tests** — runs the full suite (Chromium, Firefox, WebKit, in parallel) with credentials from GitHub Secrets
 6. **Generate Allure Report** — builds the browsable HTML report from raw results
 7. **Upload Allure Report** — attaches the report to this run as a downloadable artifact (auto-expires after 7 days)
+
+## Branching Workflow
+
+- `main` — always in a working, tested state
+- `feature/<name>` — one branch per page/feature, merged via PR after CI passes
 
 ## Glossary
 
